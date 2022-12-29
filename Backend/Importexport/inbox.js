@@ -1,0 +1,5 @@
+const {mul,add} = require('./funct')
+const result = add(23,46)
+console.log(result)
+const mull = mul(12,12)
+console.log(mull)

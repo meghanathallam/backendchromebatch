@@ -1,0 +1,10 @@
+var fs = require('fs');
+// fs.writeFileSync("adfar.txt","adfar loves backend only")
+// fs.appendFileSync("adfar.txt"," How are you")
+//  const read_data = fs.readFileSync("adfar.txt")
+//  const string_data = read_data.toString()
+//  console.log(string_data)
+//  fs.renameSync("adfar.txt","swapnil.txt")
+// fs.unlinkSync("swapnil.txt")
+//  fs.rmdirSync("dfgsduyd")
+fs.unlinkSync("adfar/adfar.txt")
