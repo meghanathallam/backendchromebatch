@@ -27,3 +27,7 @@ passport.deserializeUser(async(id,done)=>{
    }
 })
 }
+exports.isAuthenticated = (req,res,next)=>{
+    if(req.user) return next()
+    res.redirect("/login")
+}

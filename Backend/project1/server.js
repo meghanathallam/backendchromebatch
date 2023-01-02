@@ -3,7 +3,7 @@ const app = express()
 const passport= require('passport')
 const ejs =require('ejs')
 const {connectMongoose,User} = require('./mongoose')
-const { initializingPassport } = require('./passportconfig')
+const { initializingPassport, isAuthenticated } = require('./passportconfig')
 const expressSession = require('express-session')
 connectMongoose()
 
@@ -24,6 +24,17 @@ app.get("/register",(req,res)=>{
 })
 app.get("/login",(req,res)=>{
   res.render("login")
+})
+
+app.get('/profile',isAuthenticated,(req,res)=>{
+    res.send(req.user)
+})
+app.get("/logout",(req,res)=>{
+   console.log(req)
+    req.logOut(()=>{
+        console.log("a")
+    })
+    res.send("loggedout")
 })
 app.post('/login',passport.authenticate("local",
 {failureRedirect:'/register',successRedirect:'/'})
