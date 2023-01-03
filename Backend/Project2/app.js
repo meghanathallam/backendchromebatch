@@ -3,9 +3,28 @@ const express = require('express')
 const userModel = require('./database')
 const app = express()
 const jwt = require("jsonwebtoken")
+const passport = require('passport')
+require('./passport')
+app.use(passport.initialize())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-
+app.get('/protected',passport.authenticate('jwt',{session:false}),(req,res)=>{
+   return res.status(200).send({
+    success :true,
+    
+    
+   })
+})
+app.get('/profile',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    return res.status(200).send({
+     success :true,
+    })
+ })
+ app.get('/about',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    return res.status(200).send({
+     success :true,
+    })
+ })
 app.post('/register',(req,res)=>{
    const user =  new userModel({
     username: req.body.username,
@@ -47,7 +66,7 @@ app.post('/login',(req,res)=>{
             username : user.username,
             id: user.id
         }
-       const token = jwt.sign(payload,"Randomk string",{expiresIn : "1d"})
+       const token = jwt.sign(payload,"Random string",{expiresIn : "1d"})
        return res.status(200).send({
         success: true,
         message:'Logged  in  successfully',
