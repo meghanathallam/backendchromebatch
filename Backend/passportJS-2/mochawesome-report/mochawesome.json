@@ -1,0 +1,195 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2022-10-28T14:30:35.380Z",
+    "end": "2022-10-28T14:30:37.167Z",
+    "duration": 1787,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "50d31957-9aef-4fe9-8d5f-7247fa60b476",
+      "title": "",
+      "fullFile": "/home/shreshtha13/workSpace/myspace/NS-Assignment/post-class/ques/post-class-passportJS/__tests__/app.test.js",
+      "file": "/__tests__/app.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "85f61407-d0e6-4b30-9be5-ecb6f1632c2a",
+          "title": "Login",
+          "fullFile": "/home/shreshtha13/workSpace/myspace/NS-Assignment/post-class/ques/post-class-passportJS/__tests__/app.test.js",
+          "file": "/__tests__/app.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "30b98c05-ab24-4768-8c40-d00fb19a4cee",
+              "title": "Auth Login",
+              "fullFile": "/home/shreshtha13/workSpace/myspace/NS-Assignment/post-class/ques/post-class-passportJS/__tests__/app.test.js",
+              "file": "/__tests__/app.test.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Returns correct status when username and password are entered",
+                  "fullTitle": "Login Auth Login Returns correct status when username and password are entered",
+                  "timedOut": false,
+                  "duration": 1097,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// console.log(app)\nchai.request(app)\n    .post('/login')\n    .set('content-type', 'application/x-www-form-urlencoded')\n    .type('form')\n    .send('username=Matt')\n    .send('password=matt123')\n    .redirects(0)\n    .end(function (err, res) {\n        res.should.have.status(302);\n        done()\n    })",
+                  "err": {},
+                  "uuid": "cf100df5-1b87-49b0-b2e7-e3e0d5c6bde0",
+                  "parentUUID": "30b98c05-ab24-4768-8c40-d00fb19a4cee",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Redirects to './secret' when valid username and password are entered",
+                  "fullTitle": "Login Auth Login Redirects to './secret' when valid username and password are entered",
+                  "timedOut": false,
+                  "duration": 310,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// console.log(app)\nchai.request(app)\n    .post('/login')\n    .set('content-type', 'application/x-www-form-urlencoded')\n    .type('form')\n    .send('username=Matt')\n    .send('password=matt123')\n    .redirects(0)\n    .end(function (err, res) {\n        res.should.have.status(302);\n        expect(res).to.redirectTo('/secret')\n        done()\n    })",
+                  "err": {},
+                  "uuid": "5fc847ac-c8fb-4442-9e2d-5db0dcd69ad1",
+                  "parentUUID": "30b98c05-ab24-4768-8c40-d00fb19a4cee",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Redirects to '/login' when incorrect username and password are entered",
+                  "fullTitle": "Login Auth Login Redirects to '/login' when incorrect username and password are entered",
+                  "timedOut": false,
+                  "duration": 322,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// console.log(app)\nchai.request(app)\n    .post('/login')\n    .set('content-type', 'application/x-www-form-urlencoded')\n    .type('form')\n    .send('username=Matt')\n    .send('password=matt')\n    .redirects(0)\n    .end(function (err, res) {\n        res.should.have.status(302);\n        expect(res).to.redirectTo('/login')\n        done()\n    })",
+                  "err": {},
+                  "uuid": "ca3c0e99-d5e8-4865-a711-f432d5dc542b",
+                  "parentUUID": "30b98c05-ab24-4768-8c40-d00fb19a4cee",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Redirects to '/login' on accessing secret page without logging in ",
+                  "fullTitle": "Login Auth Login Redirects to '/login' on accessing secret page without logging in ",
+                  "timedOut": false,
+                  "duration": 4,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// console.log(app)\nchai.request(app)\n    .get('/secret')\n    .redirects(0)\n    .end(function (err, res) {\n        expect(res).to.redirectTo('/login')\n        done()\n    })",
+                  "err": {},
+                  "uuid": "b59bcb60-fcbd-47b9-bcdf-022c49f8fc51",
+                  "parentUUID": "30b98c05-ab24-4768-8c40-d00fb19a4cee",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Redirects to '/' on logging out ",
+                  "fullTitle": "Login Auth Login Redirects to '/' on logging out ",
+                  "timedOut": false,
+                  "duration": 4,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// console.log(app)\nchai.request(app)\n    .get('/logout')\n    .redirects(0)\n    .end(function (err, res) {\n        expect(res).to.redirectTo('/')\n        done()\n    })",
+                  "err": {},
+                  "uuid": "c587e4b0-d2b0-4c0c-9703-fb4825aec096",
+                  "parentUUID": "30b98c05-ab24-4768-8c40-d00fb19a4cee",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "cf100df5-1b87-49b0-b2e7-e3e0d5c6bde0",
+                "5fc847ac-c8fb-4442-9e2d-5db0dcd69ad1",
+                "ca3c0e99-d5e8-4865-a711-f432d5dc542b",
+                "b59bcb60-fcbd-47b9-bcdf-022c49f8fc51",
+                "c587e4b0-d2b0-4c0c-9703-fb4825aec096"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 1737,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 60000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 60000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 60000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.1.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
