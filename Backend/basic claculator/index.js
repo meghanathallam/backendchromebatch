@@ -1,116 +1,59 @@
-const express = require("express");
-const app = express();
+
+const express = require('express')
+const app = express()
 const bodyParser = require("body-parser");
-const port = 3000;
-app.use(express.urlencoded());
+const port = 8080
 
 // Parse JSON bodies (as sent by API clients)
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(bodyParser.urlencoded({ extended: false }));
+const { connection } = require('./connector')
+// write you code here
+app.get('/totalRecovered', async (req, res) =>{
+    const data = await connection.aggregate([
+        { $match:{}},
+        { $group:{_id: null, totalRecovered: {$sum: "$recovered"}}},
+        { $project: { _id: 0, totalRecovered: 1 } }
+    ])
+    res.json({data: {_id: "total", recovered: data[0].totalRecovered}});
+})
+app.get('/totalActive', async (req, res) =>{
+    const data = await connection.aggregate([
+        { $match:{}},
+        { $group:{_id: null, totalActive: {$sum: {$subtract: ["$infected","$recovered"]}}}},
+        { $project: { _id: 0, totalActive: 1 } }
+    ])
+    res.json({data: {_id: "total", active: data[0].totalActive}});
+})
 
-app.use(bodyParser.json());
+app.get('/totalDeath', async (req, res) =>{
+    const data = await connection.aggregate([
+        { $match:{}},
+        { $group:{_id: null, totalDeath: {$sum: "$death"}}},
+        { $project: { _id: 0, totalDeath: 1 } }
+    ])
+    res.json({data: {_id: "total", death: data[0].totalDeath}});
+})
 
-app.get("/", (req, res) => {
-  return res.json("Hello World!");
-});
+app.get('/hotspotStates', async (req, res) =>{
+  const data = await connection.aggregate([
+      { $addFields:{rate: {$round: [{$divide:[ {$subtract:["$infected", "$recovered"]},"$infected"]}, 5]}} },
+      { $match: {rate: {$gt: 0.1}} },
+      { $project: { state: 1, rate: 1, _id:0 } }
+  ]) 
+  res.json({data:data});
+})
 
-app.post("/add", (req, res) => {
-  const { num1, num2 } = req.body;
-  if (typeof num1 == "string" || typeof num2 == "string") {
-    return res.json({
-      status: "error",
-      message: "Invalid data types",
-    });
-  }
+app.get('/healthyStates', async (req, res) =>{
+    const data = await connection.aggregate([
+        { $addFields:{mortality: {$round: [{$divide:[ "$death","$infected"]}, 5]}} },
+        { $match: {mortality: {$lt: 0.005}} },
+        { $project: { state: 1, mortality: 1, _id:0 } }
+    ]) 
+    res.json({data: data});
+})
 
-  const result = num1 + num2;
-  if (num1 > 1000000 || num2 > 1000000 || result > 1000000) {
-    return res.json({
-      status: "error",
-      message: "Overflow",
-    });
-  }
-  return res.json({
-    status: "success",
-    message: "the sum of given two numbers",
-    sum: result,
-  });
-});
-
-app.post("/sub", (req, res) => {
-  const { num1, num2 } = req.body;
-  if (typeof num1 == "string" || typeof num2 == "string") {
-    return res.json({
-      status: "error",
-      message: "Invalid data types",
-    });
-  }
-
-  const sub = num1 - num2;
-  if (sub < -1000000) {
-    return res.json({
-      status: "error",
-      message: "Underflow",
-    });
-  }
-  return res.json({
-    status: "success",
-    message: "the difference of given two numbers",
-    difference: sub,
-  });
-});
-
-app.post("/multiply", (req, res) => {
-  const { num1, num2 } = req.body;
-  if (typeof num1 == "string" && typeof num2 == "string") {
-    return res.json({
-      status: "error",
-      message: "Invalid data types",
-    });
-  }
-
-  const mult = num1 * num2;
-  if (mult > 1000000) {
-    return res.json({
-      status: "error",
-      message: "Overflow",
-    });
-  }
-  return res.json({
-    status: "success",
-    message: "The product of given numbers",
-    result: mult,
-  });
-});
-
-app.post("/divide", (req, res) => {
-  const { num1, num2 } = req.body;
-  if (typeof num1 == "string" || typeof num2 == "string") {
-    return res.json({
-      status: "error",
-      message: "Invalid data types",
-    });
-  }
-  if (num2 === 0) {
-    return res.json({
-      status: "error",
-      message: "Cannot divide by zero",
-    });
-  }
-  const div = num1 / num2;
-  if (div > 1000000) {
-    return res.json({
-      status: "error",
-      message: "overflow",
-    });
-  }
-  return res.json({
-    status: "success",
-    message: "The division of given numbers",
-    result: div,
-  });
-});
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+app.listen(port, () => console.log(`App listening on port ${port}!`))
 
 module.exports = app;
